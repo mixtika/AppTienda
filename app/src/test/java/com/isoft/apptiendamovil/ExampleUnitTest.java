@@ -1,4 +1,4 @@
-package com.isoft.apptienda;
+package com.isoft.apptiendamovil;
 
 import org.junit.Test;
 

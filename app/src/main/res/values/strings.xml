@@ -1,5 +1,3 @@
 <resources>
-    <string name="app_name">AppTienda</string>
-    <string name="app_name1">AppTienda</string>
-    <string name="app_name2">AppTienda</string>
+    <string name="app_name">appTiendaMovil</string>
 </resources>
