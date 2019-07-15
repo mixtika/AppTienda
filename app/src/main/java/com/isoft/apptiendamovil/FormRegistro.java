@@ -1,6 +1,7 @@
 package com.isoft.apptiendamovil;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,10 @@ public class FormRegistro extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
         setContentView(R.layout.activity_form_registro);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
@@ -39,7 +44,11 @@ public class FormRegistro extends AppCompatActivity {
 
         GetServer ob = new GetServer();
         //validación
+        //http://localhost:3000/api/v1.0/save_data?nombres=silvia&apellidos=coro&correo=asda&fono=724
+
         String params="nombres="+nombres.getText()+"&apellidos="+apellidos.getText()+"&correo="+correo.getText()+"&fono="+fono.getText();
+        Toast.makeText(getApplicationContext(),params,Toast.LENGTH_LONG).show();
+
         String cad=ob.stringQuery("/save_data?"+params,"POST");
 
         Toast.makeText(getApplicationContext(),"Se registor su usuario",Toast.LENGTH_LONG).show();
