@@ -7,5 +7,11 @@
     <string name="btn_revoke_access">Denegar Acceso</string>
     <string name="btn_register_user">Registrar Usuario</string>
     <string name="title_activity_form_registro">FormRegistro</string>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
 
 </resources>

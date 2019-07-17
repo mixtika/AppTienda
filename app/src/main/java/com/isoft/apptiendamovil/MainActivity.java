@@ -3,6 +3,7 @@ package com.isoft.apptiendamovil;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,8 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -31,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int RC_SIGN_IN = 007;
 
+
     private GoogleApiClient mGoogleApiClient;
     private ProgressDialog mProgressDialog;
 
@@ -43,6 +43,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
         setContentView(R.layout.activity_main);
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         btnRegister = (Button) findViewById(R.id.btn_register);
@@ -56,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSignIn.setOnClickListener(this);
         btnSignOut.setOnClickListener(this);
         //btnRegister.setOnClickListener(this);
-        btnRevokeAccess.setOnClickListener(this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -73,8 +76,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     public void registrar(View v)
     {
-        Toast.makeText(this,"asda",Toast.LENGTH_LONG).show();
-        Intent ob = new Intent(getApplicationContext(), FormRegistro.class);
+        //Toast.makeText(this,"asda",Toast.LENGTH_LONG).show();
+        Intent ob = new Intent(getApplicationContext(), MainActivity.class);
         //ob.putExtra("id_restaurant",rest[position]._id);
         startActivity(ob);
     }
@@ -94,16 +97,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
     }
 
-    private void revokeAccess() {
-        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-                        updateUI(false);
-                    }
-                });
-    }
-
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
@@ -115,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String personName = acct.getDisplayName();
             String email = acct.getEmail();
 
-            String personPhotoUrl = acct.getPhotoUrl()+"";//.toString();
+            String personPhotoUrl = acct.getPhotoUrl() + "";//.toString();
             //String personPhotoUrl = acct.getPhotoUrl().toString();
 
 
@@ -125,18 +118,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             txtName.setText(personName);
             txtEmail.setText(email);
 
-            Glide.with(getApplicationContext()).load(personPhotoUrl)
+            /*Glide.with(getApplicationContext()).load(personPhotoUrl)
                     .thumbnail(0.5f)
                     .crossFade()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(imgProfilePic);
-
+                    .into(imgProfilePic);*/
+            //Uri axxx=acct.getPhotoUrl();
+            imgProfilePic.setImageBitmap(CImagen.getImagen(acct.getPhotoUrl()+""));
+            //downloadFile("http://jonsegador.com/wp-content/apezz.png");
             updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
             updateUI(false);
         }
     }
+
 
     @Override
     public void onClick(View v) {
@@ -149,10 +145,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.btn_sign_out:
                 signOut();
-                break;
-
-            case R.id.btn_revoke_access:
-                revokeAccess();
                 break;
         }
     }
