@@ -1,18 +1,27 @@
 package com.isoft.apptiendamovil;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -25,8 +34,10 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
+    Context root;
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int RC_SIGN_IN = 007;
 
@@ -34,32 +45,64 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private GoogleApiClient mGoogleApiClient;
     private ProgressDialog mProgressDialog;
 
-    private SignInButton btnSignIn;
-    private Button btnRegister, btnSignOut, btnRevokeAccess;
-    private LinearLayout llProfileLayout;
+    private SignInButton xc;
+    private Button  btnSignOut, btnSignIn;
     private ImageView imgProfilePic;
     private TextView txtName, txtEmail;
 
+    private String imgUrl,user,email;
+    ImageView imgProfile;
+    Menu menu;
+    boolean isLog=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (android.os.Build.VERSION.SDK_INT > 9) {
+        if (Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
         setContentView(R.layout.activity_main);
-        btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
-        btnRegister = (Button) findViewById(R.id.btn_register);
-        btnSignOut = (Button) findViewById(R.id.btn_sign_out);
-        btnRevokeAccess = (Button) findViewById(R.id.btn_revoke_access);
-        llProfileLayout = (LinearLayout) findViewById(R.id.llProfile);
-        imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
-        txtName = (TextView) findViewById(R.id.txtName);
-        txtEmail = (TextView) findViewById(R.id.txtEmail);
+        root=this;
+        imgUrl=user=email="";
 
-        btnSignIn.setOnClickListener(this);
-        btnSignOut.setOnClickListener(this);
-        //btnRegister.setOnClickListener(this);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        //MenuItem  aa=navigationView.findI(R.id.nav_camera);
+
+        View hView = navigationView.getHeaderView(0);
+        View hView1 = navigationView.getChildAt(0);
+        txtName = (TextView) hView.findViewById(R.id.nombre);
+        txtEmail = (TextView) hView.findViewById(R.id.correo);
+        imgProfile = (ImageView) hView.findViewById(R.id.imagen);
+
+        Menu men=navigationView.getMenu();
+        MenuItem x=men.findItem(R.id.nav_camera);
+
+        //        NavigationMenuItemView it=(Nav) findViewById(R.id.nav_camera);
+        x.setTitle("web cam");
+        int xx=2;
+        //MenuItem it=(MenuItem) navigationView.findViewById(R.id.nav_camera);
+
+        /*btnSignIn = (Button) findViewById(R.id.action_login);
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(root,"assa",Toast.LENGTH_LONG).show();
+            }
+        });*/
+
+
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -69,18 +112,123 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+        Boolean xxxx=checkCameraHardware(this);
+        Toast.makeText(this,xxxx.toString(),Toast.LENGTH_LONG).show();
+    }
 
-        // Customizing G+ button
-        btnSignIn.setSize(SignInButton.SIZE_STANDARD);
-        btnSignIn.setScopes(gso.getScopeArray());
+    private boolean checkCameraHardware(Context context) {
+        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
+            // this device has a camera
+            return true;
+        } else {
+            // no camera on this device
+            return false;
+        }
     }
-    public void registrar(View v)
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        this.menu=menu;
+        getMenuInflater().inflate(R.menu.main, menu);
+        //setBackgroundItem();
+        return true;
+
+    }
+    private void setBackgroundItem()
     {
-        //Toast.makeText(this,"asda",Toast.LENGTH_LONG).show();
-        Intent ob = new Intent(getApplicationContext(), MainActivity.class);
-        //ob.putExtra("id_restaurant",rest[position]._id);
-        startActivity(ob);
+        MenuItem item = menu.findItem(R.id.action_login);
+        //MenuItem item1 = menu.findItem(R.id.action_login1);
+        //MenuItem item2 = menu.findItem(R.id.action_login2);
+        MenuItem itemx = menu.findItem(R.id.nav_camera);
+
+
+        item.setTitle("1");
+        //item1.setTitle("2");
+        //item2.setTitle("3");
+
+        //item.setTitle("Change background colour to magenta");
     }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_login) {
+            // item.setVisible(false);
+            signIn();
+            return true;
+        }
+        if (id == R.id.action_login) {
+            // item.setVisible(false);
+            //Intent ob=new Intent(root,dos.class);
+            //startActivity(ob);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        //item.setVisible(false);
+        MenuItem ae= (MenuItem) findViewById(R.id.nav_camera);
+
+
+        if (id == R.id.nav_camera) {
+            //Toast.makeText(root,"hola",Toast.LENGTH_LONG).show();
+            // Handle the camera action
+            item.setEnabled(false);
+
+        } else if (id == R.id.nav_gallery) {
+
+
+
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+            salir();
+        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+    private void salir()
+    {
+        //Button btnSignOut = (Button) findViewById(R.id.nav_send2);
+        TextView xyz=(TextView) findViewById(R.id.nombre);
+        xyz.setText("holaaaa");
+        //btnSignOut.setVisibility(View.GONE);
+        signOut();
+    }
+
+    public void hola(MenuItem item) {
+        //login
+        signIn();
+    }
+
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -100,35 +248,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
-            // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-
-            Log.e(TAG, "display name: " + acct.getDisplayName());
-
-            String personName = acct.getDisplayName();
-            String email = acct.getEmail();
-
-            String personPhotoUrl = acct.getPhotoUrl() + "";//.toString();
-            //String personPhotoUrl = acct.getPhotoUrl().toString();
-
-
-            Log.e(TAG, "Name: " + personName + ", email: " + email
-                    + ", Image: " + personPhotoUrl +", ID: "+ acct.getId());
-
-            txtName.setText(personName);
+            user = acct.getDisplayName();
+            email = acct.getEmail();
+            imgUrl = acct.getPhotoUrl() + "";
+            txtName.setText(user);
             txtEmail.setText(email);
-
-            /*Glide.with(getApplicationContext()).load(personPhotoUrl)
+            imgProfile.setImageBitmap(CImagen.getImagen(imgUrl));
+            /* Glide.with(getApplicationContext()).load(acct.getPhotoUrl())
                     .thumbnail(0.5f)
                     .crossFade()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(imgProfilePic);*/
-            //Uri axxx=acct.getPhotoUrl();
-            imgProfilePic.setImageBitmap(CImagen.getImagen(acct.getPhotoUrl()+""));
-            //downloadFile("http://jonsegador.com/wp-content/apezz.png");
+                    .into(imgs);*/
+
             updateUI(true);
         } else {
-            // Signed out, show unauthenticated UI.
             updateUI(false);
         }
     }
@@ -138,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         int id = v.getId();
 
-        switch (id) {
+        /*switch (id) {
             case R.id.btn_sign_in:
                 signIn();
                 break;
@@ -146,7 +280,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_sign_out:
                 signOut();
                 break;
-        }
+        }*/
     }
 
     @Override
@@ -171,6 +305,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.d(TAG, "Got cached sign-in");
             GoogleSignInResult result = opr.get();
             handleSignInResult(result);
+
         } else {
             // If the user has not previously signed in on this device or the sign-in has expired,
             // this asynchronous branch will attempt to sign in the user silently.  Cross-device
@@ -212,17 +347,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void updateUI(boolean isSignedIn) {
         if (isSignedIn) {
-            btnSignIn.setVisibility(View.GONE);
-            btnRegister.setVisibility(View.GONE);
-            btnSignOut.setVisibility(View.VISIBLE);
-            btnRevokeAccess.setVisibility(View.VISIBLE);
-            llProfileLayout.setVisibility(View.VISIBLE);
+            ///btnSignIn.setVisibility(View.GONE);
+            //btnRegister.setVisibility(View.GONE);
+            ///btnSignOut.setVisibility(View.VISIBLE);
+            //btnRevokeAccess.setVisibility(View.VISIBLE);
+            //llProfileLayout.setVisibility(View.VISIBLE);
         } else {
-            btnRegister.setVisibility(View.VISIBLE);
-            btnSignIn.setVisibility(View.VISIBLE);
-            btnSignOut.setVisibility(View.GONE);
-            btnRevokeAccess.setVisibility(View.GONE);
-            llProfileLayout.setVisibility(View.GONE);
+            ///btnSignIn.setVisibility(View.VISIBLE);
+            ///btnSignOut.setVisibility(View.GONE);
+            //btnRevokeAccess.setVisibility(View.GONE);
+            //llProfileLayout.setVisibility(View.GONE);
         }
     }
 }

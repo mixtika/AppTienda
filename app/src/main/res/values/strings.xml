@@ -1,17 +1,9 @@
 <resources>
     <string name="app_name">App Tienda Movil G+</string>
-
-    <string name="action_settings">Settings</string>
-
-    <string name="btn_logout_from_google">Salir de Google</string>
-    <string name="btn_revoke_access">Denegar Acceso</string>
-    <string name="btn_register_user">Registrar Usuario</string>
-    <string name="title_activity_form_registro">FormRegistro</string>
-    <string name="title_activity_menu">MenuActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-
+    <string name="action_login">Login</string>
 </resources>
