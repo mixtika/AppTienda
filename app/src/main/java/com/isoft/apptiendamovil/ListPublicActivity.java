@@ -53,8 +53,9 @@ public class ListPublicActivity extends AppCompatActivity {
                                     int position, long id) {
                 Toast.makeText(getApplicationContext(),view.getId()+"", Toast.LENGTH_SHORT).show();
                 CProducto item = items.get(position);
-                Intent ob=new Intent();
+                Intent ob=new Intent(getApplicationContext(), DetallePublicActivity.class);
                 ob.putExtra("id_producto",item.get_id());
+                ob.putExtra("correo",scorreo);
                 startActivity(ob);
                 //item.setCantidad(item.getCantidad()+1);
                 //adapter.notifyDataSetChanged();
