@@ -11,6 +11,18 @@ public class CImagen {
     {
         URL imageUrl = null;
         try {
+            imageUrl = new URL(UrlConnection.URLImg+url);
+            HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
+            conn.connect();
+            Bitmap bmp = BitmapFactory.decodeStream(conn.getInputStream());
+            return bmp;
+        }catch (Exception ex){}
+        return null;
+    }
+    public static Bitmap getImagenProfile(String url)
+    {
+        URL imageUrl = null;
+        try {
             imageUrl = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
             conn.connect();

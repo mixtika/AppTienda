@@ -13,13 +13,13 @@
             android:icon="@drawable/ic_euro_symbol_black_24dp"
             android:title="Publicar" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_compras"
             android:icon="@drawable/ic_shopping_cart_black_24dp"
             android:title="Compras" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_mispublicaciones"
+            android:icon="@drawable/ic_euro_symbol_black_24dp"
+            android:title="Mis Publicaciones" />
     </group>
 
     <item android:title="Communicate">

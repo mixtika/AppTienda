@@ -191,9 +191,13 @@ public class MainActivity extends AppCompatActivity
             ob.putExtra("correo",scorreo);
             startActivity(ob);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_mispublicaciones) {
+            Intent ob=new Intent(this,MyPublicActivity.class);
+            ob.putExtra("correo",scorreo);
+            startActivity(ob);
 
-        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.action_login) {
 
         } else if (id == R.id.nav_share) {
 
@@ -244,7 +248,7 @@ public class MainActivity extends AppCompatActivity
             imgUrl = acct.getPhotoUrl() + "";
             txtName.setText(user);
             txtEmail.setText(email);
-            imgProfile.setImageBitmap(CImagen.getImagen(imgUrl));
+            imgProfile.setImageBitmap(CImagen.getImagenProfile(imgUrl));
             /* Glide.with(getApplicationContext()).load(acct.getPhotoUrl())
                     .thumbnail(0.5f)
                     .crossFade()
