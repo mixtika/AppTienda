@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity
     ImageView imgProfile;
     Menu menu;
     boolean isLog=false;
+    String scorreo="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity
         View hView = navigationView.getHeaderView(0);
         View hView1 = navigationView.getChildAt(0);
         txtName = (TextView) hView.findViewById(R.id.nombre);
-        txtEmail = (TextView) hView.findViewById(R.id.correo);
+        txtEmail = (TextView) hView.findViewById(R.id.cantidad);
         imgProfile = (ImageView) hView.findViewById(R.id.imagen);
 
         Menu men=navigationView.getMenu();
@@ -179,13 +181,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
+        scorreo=txtEmail.getText()+"";
         if (id == R.id.nav_registro) {
-        Intent ob=new Intent(this,RegistroActivity.class);
-        ob.putExtra("correo",txtEmail.getText()+"");
-        startActivity(ob);
+            Intent ob=new Intent(this,RegistroActivity.class);
+            ob.putExtra("correo",scorreo);
+            startActivity(ob);
         } else if (id == R.id.nav_public) {
-
-
+            Intent ob=new Intent(this,PublicActivity.class);
+            ob.putExtra("correo",scorreo);
+            startActivity(ob);
 
         } else if (id == R.id.nav_slideshow) {
 

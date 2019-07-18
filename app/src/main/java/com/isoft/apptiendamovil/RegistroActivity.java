@@ -2,13 +2,11 @@ package com.isoft.apptiendamovil;
 
 import android.os.Build;
 import android.os.StrictMode;
-import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -39,10 +37,10 @@ public class RegistroActivity extends AppCompatActivity implements OnMapReadyCal
         setContentView(R.layout.activity_registro);
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        nombres = findViewById(R.id.nombres);
-        apellidos = findViewById(R.id.apellidos);
-        correo = findViewById(R.id.correo);
-        edad =findViewById(R.id.edad);
+        nombres = findViewById(R.id.titulo);
+        apellidos = findViewById(R.id.descripcion);
+        correo = findViewById(R.id.cantidad);
+        edad =findViewById(R.id.precio);
         mas = findViewById(R.id.sexom);
         fem = findViewById(R.id.sexom);
         scorreo = getIntent().getExtras().getString("correo");

@@ -58,14 +58,20 @@ public abstract class FotoManagerGotev {
     private String idPhoto="";
     private Activity activity;
     private String parameterNamePhoto;
-    private ArrayList<CParametros> parametros;
+    //private ArrayList<CParametros> parametros;
     private Bitmap bitmap=null;
     MultipartUploadRequest start;
 
-    public void startUpload()
+    public void startUpload(ArrayList<CParametros> parametros)
     {
+        CParametros t;
         try
         {
+            for(int i=0;i<parametros.size();i++)
+            {
+                t=parametros.get(i);
+                start.addParameter(t.getVar(),t.getValue());
+            }
             start.startUpload();
         } catch (Exception exc) {
             Toast.makeText(activity,"Error: "+exc.getMessage(), Toast.LENGTH_SHORT).show();
@@ -79,8 +85,8 @@ public abstract class FotoManagerGotev {
         this.bitmap = bitmap;
     }
 
-    public FotoManagerGotev(Activity activity, String URL, ArrayList<CParametros> parametros) {
-        this.parametros=parametros;
+    public FotoManagerGotev(Activity activity, String URL) {
+        //this.parametros=parametros;
 
         this.activity=activity;
         this.URL = URL;
@@ -157,12 +163,7 @@ public abstract class FotoManagerGotev {
                 request.addFileToUpload(pathCamera,getParameterNamePhoto());
                 request.setAutoDeleteFilesAfterSuccessfulUpload(eliminarFoto);
             }
-            CParametros t;
-            for(int i=0;i<parametros.size();i++)
-            {
-                t=parametros.get(i);
-                request.addParameter(t.getVar(),t.getValue());
-            }
+            ///eliminado
             request.setNotificationConfig(new UploadNotificationConfig());
             request.setMaxRetries(2);
             request.setDelegate(new UploadStatusDelegate() {
@@ -184,7 +185,7 @@ public abstract class FotoManagerGotev {
                 }
             });
             start=request;
-            ///request.startUpload();
+            ////////request.startUpload();
         } catch (Exception exc) {
             Toast.makeText(activity,"Error: "+exc.getMessage(), Toast.LENGTH_SHORT).show();
         }
