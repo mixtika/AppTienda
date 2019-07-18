@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyPublicActivity extends AppCompatActivity {
-    private CProducto fruta[];
-    private int i;
 
     List<CProducto> items = new ArrayList<>();
     MyListProducto adapter;
@@ -49,19 +47,12 @@ public class MyPublicActivity extends AppCompatActivity {
         {
             JSONObject json=new JSONObject(cad);
             JSONArray array=json.optJSONArray("productos");
-            //menu=new CMenu[array.length()];
             for(int i=0;i<array.length();i++)
             {
                 JSONObject hijo = array.getJSONObject(i);
                 items.add(new CProducto(hijo.optString("titulo"),hijo.optString("descripcion"),hijo.optInt("cantidad"),hijo.optDouble("precio"),hijo.optString("foto"),hijo.optString("fecha_registro"),hijo.optBoolean("estado"),hijo.optString("_id"),hijo.optString("usuario")));
-                //menu[i]=new CMenu((i+1),hijo.optString("_id"),hijo.optString("name"),hijo.optString("description"),hijo.optDouble("price"),hijo.optString("picture"),id_restaurant);
             }
         }catch (Exception ex){}
-
-        //items.add(new CProducto("C++", "Lenguaje de Programacion", 100, 100.0, "", "", true, "", ""));
-        //items.add(new CProducto("Java", "Lenguaje de Programacion", 100, 100.0, "", "", true, "", ""));
-        //items.add(new CProducto("java", "Lenguaje de Programacion", "1000", "100.0", "", "", "01-01-2019", "", ""));
-
 
         adapter = new MyListProducto(this, items);
         list.setAdapter(adapter);
@@ -106,7 +97,7 @@ public class MyPublicActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        //getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 

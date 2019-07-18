@@ -35,7 +35,9 @@
 
         <activity android:name=".RegistroActivity" />
         <activity android:name=".PublicActivity" />
-        <activity android:name=".MyPublicActivity"></activity>
+        <activity android:name=".MyPublicActivity" />
+        <activity android:name=".ListPublicActivity" />
+        <activity android:name=".DetallePublicActivity"></activity>
     </application>
 
 </manifest>

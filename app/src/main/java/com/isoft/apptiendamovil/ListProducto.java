@@ -7,15 +7,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import java.util.List;
 
-public class MyListProducto extends ArrayAdapter<CProducto> {
-
-    //private LayoutInflater inflater;
+public class ListProducto extends ArrayAdapter<CProducto> {
     private List<CProducto> producto;
-    //Context context;
 
-    public MyListProducto(Context context, List<CProducto> producto) {
+    public ListProducto(Context context, List<CProducto> producto) {
         super(context, R.layout.my_list_producto, producto);
         this.producto = producto;
     }
@@ -32,7 +30,6 @@ public class MyListProducto extends ArrayAdapter<CProducto> {
         TextView precio=(TextView) view.findViewById(R.id.precio);
 
         picture.setImageBitmap(CImagen.getImagen(item.getFoto()));
-        //picture.setImageResource(R.drawable.ic_menu_camera);
         titulo.setText(item.getTitulo());
         description.setText(item.getDescription());
         cantidad.setText(item.getCantidad()+"");

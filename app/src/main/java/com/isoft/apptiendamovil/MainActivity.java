@@ -182,40 +182,47 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         scorreo=txtEmail.getText()+"";
-        if (id == R.id.nav_registro) {
-            Intent ob=new Intent(this,RegistroActivity.class);
-            ob.putExtra("correo",scorreo);
-            startActivity(ob);
-        } else if (id == R.id.nav_public) {
-            Intent ob=new Intent(this,PublicActivity.class);
-            ob.putExtra("correo",scorreo);
-            startActivity(ob);
+        if(scorreo.length()>0) {
+            if (id == R.id.nav_registro) {
+                Intent ob = new Intent(this, RegistroActivity.class);
+                ob.putExtra("correo", scorreo);
+                startActivity(ob);
+            } else if (id == R.id.nav_public) {
+                Intent ob = new Intent(this, PublicActivity.class);
+                ob.putExtra("correo", scorreo);
+                startActivity(ob);
 
-        } else if (id == R.id.nav_mispublicaciones) {
-            Intent ob=new Intent(this,MyPublicActivity.class);
-            ob.putExtra("correo",scorreo);
-            startActivity(ob);
+            } else if (id == R.id.nav_mispublicaciones) {
+                Intent ob = new Intent(this, MyPublicActivity.class);
+                ob.putExtra("correo", scorreo);
+                startActivity(ob);
 
 
-        } else if (id == R.id.action_login) {
+            } else if (id == R.id.nav_compras) {
+                Intent ob = new Intent(this, ListPublicActivity.class);
+                ob.putExtra("correo", scorreo);
+                startActivity(ob);
+            } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_logout) {
-            salir();
-            Toast.makeText(this,"Sesion cerrada...",Toast.LENGTH_LONG).show();
+            } else if (id == R.id.nav_logout) {
+                salir();
+                Toast.makeText(this, "Sesion cerrada...", Toast.LENGTH_LONG).show();
+            }
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+        }else{
+            Toast.makeText(this,"Usted debe iniciar Sesion",Toast.LENGTH_LONG).show();
+            return false;
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+
     }
     private void salir()
     {
-        //Button btnSignOut = (Button) findViewById(R.id.nav_send2);
-        TextView xyz=(TextView) findViewById(R.id.nombre);
-        xyz.setText("holaaaa");
-        //btnSignOut.setVisibility(View.GONE);
         signOut();
+        txtName.setText("");
+        txtEmail.setText("");
+        imgProfile.setImageResource(R.mipmap.ic_launcher_round);
     }
 
     public void hola(MenuItem item) {
