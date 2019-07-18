@@ -87,20 +87,12 @@ public class MainActivity extends AppCompatActivity
         imgProfile = (ImageView) hView.findViewById(R.id.imagen);
 
         Menu men=navigationView.getMenu();
-        MenuItem x=men.findItem(R.id.nav_camera);
+        MenuItem x=men.findItem(R.id.nav_registro);
 
         //        NavigationMenuItemView it=(Nav) findViewById(R.id.nav_camera);
-        x.setTitle("web cam");
+        //////x.setTitle("web cam");
         int xx=2;
-        //MenuItem it=(MenuItem) navigationView.findViewById(R.id.nav_camera);
 
-        /*btnSignIn = (Button) findViewById(R.id.action_login);
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(root,"assa",Toast.LENGTH_LONG).show();
-            }
-        });*/
 
 
 
@@ -150,7 +142,7 @@ public class MainActivity extends AppCompatActivity
         MenuItem item = menu.findItem(R.id.action_login);
         //MenuItem item1 = menu.findItem(R.id.action_login1);
         //MenuItem item2 = menu.findItem(R.id.action_login2);
-        MenuItem itemx = menu.findItem(R.id.nav_camera);
+        //MenuItem itemx = menu.findItem(R.id.nav_camera);
 
 
         item.setTitle("1");
@@ -190,15 +182,17 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //item.setVisible(false);
-        MenuItem ae= (MenuItem) findViewById(R.id.nav_camera);
+        MenuItem ae= (MenuItem) findViewById(R.id.nav_registro);
 
 
-        if (id == R.id.nav_camera) {
-            //Toast.makeText(root,"hola",Toast.LENGTH_LONG).show();
-            // Handle the camera action
-            item.setEnabled(false);
+        if (id == R.id.nav_registro) {
 
-        } else if (id == R.id.nav_gallery) {
+            //item.setEnabled(false);
+        Intent ob=new Intent(this,RegistroActivity.class);
+        ob.putExtra("correo",txtEmail.getText()+"");
+        startActivity(ob);
+
+        } else if (id == R.id.nav_public) {
 
 
 
@@ -208,8 +202,9 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_logout) {
             salir();
+            Toast.makeText(this,"Sesion cerrada...",Toast.LENGTH_LONG).show();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
