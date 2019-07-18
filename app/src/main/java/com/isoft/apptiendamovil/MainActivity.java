@@ -178,20 +178,11 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        //item.setVisible(false);
-        MenuItem ae= (MenuItem) findViewById(R.id.nav_registro);
-
-
         if (id == R.id.nav_registro) {
-
-            //item.setEnabled(false);
         Intent ob=new Intent(this,RegistroActivity.class);
         ob.putExtra("correo",txtEmail.getText()+"");
         startActivity(ob);
-
         } else if (id == R.id.nav_public) {
 
 
