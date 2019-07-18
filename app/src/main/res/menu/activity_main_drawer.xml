@@ -15,7 +15,7 @@
         <item
             android:id="@+id/nav_compras"
             android:icon="@drawable/ic_shopping_cart_black_24dp"
-            android:title="Comprar Producto" />
+            android:title="VerPublicaciones" />
         <item
             android:id="@+id/nav_mispublicaciones"
             android:icon="@drawable/ic_euro_symbol_black_24dp"

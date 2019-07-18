@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity
         root=this;
         imgUrl=user=email="";
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -106,8 +105,8 @@ public class MainActivity extends AppCompatActivity
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-        Boolean xxxx=checkCameraHardware(this);
-        Toast.makeText(this,xxxx.toString(),Toast.LENGTH_LONG).show();
+        /* Boolean xxxx=checkCameraHardware(this);
+        Toast.makeText(this,xxxx.toString(),Toast.LENGTH_LONG).show();*/
     }
 
     private boolean checkCameraHardware(Context context) {

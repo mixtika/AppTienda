@@ -62,10 +62,10 @@ public class MyPublicActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getApplicationContext(),view.getId()+"", Toast.LENGTH_SHORT).show();
-                CProducto item = items.get(position);
-                item.setCantidad(item.getCantidad()+1);
-                adapter.notifyDataSetChanged();
+                ///Toast.makeText(getApplicationContext(),view.getId()+"", Toast.LENGTH_SHORT).show();
+                ///CProducto item = items.get(position);
+                ///item.setCantidad(item.getCantidad()+1);
+                ///adapter.notifyDataSetChanged();
             }
         });
 
@@ -85,8 +85,9 @@ public class MyPublicActivity extends AppCompatActivity {
         productob = (CProducto) list.getItemAtPosition(adx.position);
         menu.setHeaderTitle(productob.getTitulo());
 
-        menu.add(0, v.getId(), 0, "Borrar");
-        menu.add(0, v.getId(), 0, "Reset");
+        menu.add(0, v.getId(), 0, "Dar de baja la publicación");
+        ///menu.add(0, v.getId(), 0, "Reset");
+
         //MenuInflater inflater = getMenuInflater();
         //inflater.inflate(R.menu.menu_main, menu);
 
@@ -117,8 +118,11 @@ public class MyPublicActivity extends AppCompatActivity {
     }
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        if (item.getTitle() == "Borrar") {
+        if (item.getTitle() == "Dar de baja la publicación") {
             items.remove(productob);
+            GetServer ob=new GetServer();
+            String xx=productob.get_id();
+            ob.stringQuery("/darbajapub?id="+xx,"POST");
             adapter.notifyDataSetChanged();
         }
         else {

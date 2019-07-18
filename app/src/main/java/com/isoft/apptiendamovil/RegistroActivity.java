@@ -15,6 +15,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
@@ -62,8 +63,8 @@ public class RegistroActivity extends AppCompatActivity implements OnMapReadyCal
         mMap.addMarker(mko);
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
-
     public void registrarDatos(View view) {
+        //Toast.makeText(getApplicationContext(),"XY: "+mMap.getMyLocation().getLatitude() ,Toast.LENGTH_LONG).show();
         if(nombres.getText().toString().length()>2) //validacion
         {
             GetServer ob = new GetServer();

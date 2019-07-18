@@ -45,13 +45,13 @@ public class ListPublicActivity extends AppCompatActivity {
 
         adapter = new MyListProducto(this, items);
         list.setAdapter(adapter);
-        registerForContextMenu(list);
+        ///////registerForContextMenu(list);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getApplicationContext(),view.getId()+"", Toast.LENGTH_SHORT).show();
+                ////Toast.makeText(getApplicationContext(),view.getId()+"", Toast.LENGTH_SHORT).show();
                 CProducto item = items.get(position);
                 Intent ob=new Intent(getApplicationContext(), DetallePublicActivity.class);
                 ob.putExtra("id_producto",item.get_id());
